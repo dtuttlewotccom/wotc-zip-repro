@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>WOTC ZIP code repro</title>
   <style>
-    body { font: 15px/1.55 system-ui, -apple-system, sans-serif; margin: 0; padding: 1.25rem; max-width: 640px; }
+    body { font: 15px/1.55 system-ui, -apple-system, sans-serif; margin: 0; padding: 1.25rem; max-width: 900px; }
     h1 { font-size: 1.05rem; }
     .hint { color: #555; font-size: .9rem; }
     fieldset { border: 1px solid #ccc; border-radius: 8px; margin: 1rem 0; padding: .5rem 1rem 1rem; }
@@ -15,20 +15,25 @@
     input, select { font-size: 16px; padding: .55rem; width: 100%; box-sizing: border-box; border: 1px solid #999; border-radius: 6px; }
     input.form-control.invalid { border-color: #c0392b; background: #fdedec; }
     .error-msg { color: #c0392b; margin: .3rem 0 0; font-size: .92rem; }
-    .panel { background: #f5f5f5; border: 1px solid #ddd; border-radius: 8px; padding: .75rem 1rem; margin-top: 1rem; font-size: .88rem; }
-    .panel code { white-space: pre-wrap; word-break: break-all; display: block; margin: .15rem 0 .5rem; }
+    .cols { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .col { flex: 1 1 320px; min-width: 300px; }
+    .tag { font-size: .72rem; font-weight: 700; letter-spacing: .04em; padding: .2rem .45rem; border-radius: 4px; display: inline-block; margin-bottom: .3rem; }
+    .tag-cur { background: #fdecea; color: #922; }
+    .tag-fix { background: #e8f6ec; color: #1a6b34; }
+    .panel { background: #f5f5f5; border: 1px solid #ddd; border-radius: 8px; padding: .75rem 1rem; margin-top: 1rem; font-size: .86rem; }
+    .panel code { white-space: pre-wrap; word-break: break-all; display: block; margin: .1rem 0 .5rem; }
     button { font: inherit; margin: .25rem .35rem .25rem 0; padding: .45rem .7rem; border-radius: 6px; border: 1px solid #999; background: #fff; }
-    #next_form[disabled] { opacity: .45; }
+    button[disabled] { opacity: .45; }
     .inject h2 { font-size: .9rem; margin: 1.1rem 0 .35rem; }
   </style>
-  <script type="module" crossorigin src="./assets/index-5Vf0NX4t.js"></script>
+  <script type="module" crossorigin src="./assets/app.js"></script>
 </head>
 <body>
-  <h1>ZIP field bound to the real <code>store/f8850/demographics.js</code></h1>
+  <h1>ZIP field — real <code>store/f8850/demographics.js</code> vs. proposed fix</h1>
   <p class="hint">
-    The ZIP <code>&lt;input&gt;</code> and its <code>handleChange</code>/<code>handleInput</code> are copied
-    verbatim from <code>Demographics.vue</code>, wired to the unmodified Vuex module. The other fields exist
-    only so iOS/Android offer address autofill.
+    Left: the unmodified Vuex module + <code>Demographics.vue</code> bindings. Right: the same module with
+    only <code>SET_ZIP_CODE</code> / <code>VALIDATE_ZIP_CODE</code> swapped to strip
+    <code>/[^0-9-]/</code> before validating. Both fields get the same injected value.
   </p>
   <div id="app"></div>
 </body>

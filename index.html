@@ -4,37 +4,40 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>WOTC ZIP code repro</title>
+
+  <!-- exact stylesheets the real f8850 form loads (copied from public/plugins/f8850/css/) -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="./f8850/bootstrap.min.css" rel="stylesheet" />
+  <link href="./f8850/main.css" rel="stylesheet" />
+
   <style>
-    body { font: 15px/1.55 system-ui, -apple-system, sans-serif; margin: 0; padding: 1.25rem; max-width: 900px; }
-    h1 { font-size: 1.05rem; }
-    .hint { color: #555; font-size: .9rem; }
-    fieldset { border: 1px solid #ccc; border-radius: 8px; margin: 1rem 0; padding: .5rem 1rem 1rem; }
-    legend { padding: 0 .4rem; color: #666; font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; }
-    .form-group { margin: .8rem 0; }
-    label { display: block; font-weight: 600; margin-bottom: .25rem; }
-    input, select { font-size: 16px; padding: .55rem; width: 100%; box-sizing: border-box; border: 1px solid #999; border-radius: 6px; }
-    input.form-control.invalid { border-color: #c0392b; background: #fdedec; }
-    .error-msg { color: #c0392b; margin: .3rem 0 0; font-size: .92rem; }
-    .cols { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .col { flex: 1 1 320px; min-width: 300px; }
-    .tag { font-size: .72rem; font-weight: 700; letter-spacing: .04em; padding: .2rem .45rem; border-radius: 4px; display: inline-block; margin-bottom: .3rem; }
-    .tag-cur { background: #fdecea; color: #922; }
-    .tag-fix { background: #e8f6ec; color: #1a6b34; }
-    .panel { background: #f5f5f5; border: 1px solid #ddd; border-radius: 8px; padding: .75rem 1rem; margin-top: 1rem; font-size: .86rem; }
-    .panel code { white-space: pre-wrap; word-break: break-all; display: block; margin: .1rem 0 .5rem; }
-    button { font: inherit; margin: .25rem .35rem .25rem 0; padding: .45rem .7rem; border-radius: 6px; border: 1px solid #999; background: #fff; }
-    button[disabled] { opacity: .45; }
-    .inject h2 { font-size: .9rem; margin: 1.1rem 0 .35rem; }
+    /* Demographics.vue \3c style lang="scss" scoped> — nested SCSS compiled & de-scoped */
+    .form-group { margin-bottom: 0.5rem !important; }
+    .form-group label { height: auto; }
+    .form-group select.form-control[id=state] { padding: .375rem; }
+    .form-group .form-control { height: 32px; padding: .175rem .175rem; }
+    .form-group .input-group .form-control { height: 32px !important; padding-left: 24px; }
+    .input-group .form-control { height: 32px !important; padding-left: 24px; }
+    .input-group .input-group-text { padding-left: .175rem; padding-top: 0; padding-bottom: 0; height: 32px; }
+    label { margin-bottom: .1rem; }
+    label .red { padding-left: .5rem; display: contents; }
+    h6 { margin: 2rem 0; }
+
+    /* harness chrome only — kept outside .form-group so it can't affect the field */
+    .harness { padding: 1.25rem; max-width: 900px; margin: 0 auto; }
+    .harness .lead { font-size: .9rem; color: #555; }
+    .cap { font-size: 12px; font-weight: 700; letter-spacing: .04em; margin: 0 0 .3rem; }
+    .cap-cur { color: #b03030; }
+    .cap-fix { color: #1a6b34; }
+    .dbg { background: #fff; border: 1px solid #d5d9e0; border-radius: 6px; padding: .6rem .8rem; font-size: 12px; margin-top: .6rem; }
+    .dbg code { display: block; white-space: pre-wrap; word-break: break-all; margin: .1rem 0 .45rem; }
+    .inject { margin-top: 1.25rem; }
+    .inject h2 { font-size: .9rem; margin: 0 0 .35rem; }
+    .inject button { margin: .2rem .3rem .2rem 0; }
   </style>
   <script type="module" crossorigin src="./assets/app.js"></script>
 </head>
 <body>
-  <h1>ZIP field — real <code>store/f8850/demographics.js</code> vs. proposed fix</h1>
-  <p class="hint">
-    Left: the unmodified Vuex module + <code>Demographics.vue</code> bindings. Right: the same module with
-    only <code>SET_ZIP_CODE</code> / <code>VALIDATE_ZIP_CODE</code> swapped to strip
-    <code>/[^0-9-]/</code> before validating. Both fields get the same injected value.
-  </p>
-  <div id="app"></div>
+  <div class="harness"><div id="app"></div></div>
 </body>
 </html>
